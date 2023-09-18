@@ -4,13 +4,24 @@
 		<title>Mobility in smart cities</title>
 		<!-- Include our Custom CSS -->
 		<link rel="stylesheet" href="./css/styles.css" />
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+		/>
+		<link rel="stylesheet" href="./library/leaflet-routing-machine.css" />
+		<style>
+			.map {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+			}
+		</style>
 	</head>
 	<body>
-		<header>
-			<h1>Hello World!</h1>
-		</header>
-		<main></main>
-		<!-- Add script -->
+		<!-- Add scripts -->
+		<div id="map" class="map"></div>
+		<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+		<script src="./library/leaflet-routing-machine.js"></script>
 		<script type="module" src="./js/main.js"></script>
 	</body>
 </html>

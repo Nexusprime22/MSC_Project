@@ -1,152 +1,152 @@
 [
 	{
 		"name": "Guillaume's house (Belfort)",
-		"latitude": 47.6366,
-		"longitude": 6.8628
+		"latitude": 47.6249,
+		"longitude": 6.8462
 	},
 	{
 		"name": "CROUS Duvillard (Belfort)",
-		"latitude": 47.6352,
-		"longitude": 6.8657
+		"latitude": 47.6438,
+		"longitude": 6.8325
 	},
 	{
 		"name": "UTBM Building B room 409 (Belfort)",
-		"latitude": 47.6361,
-		"longitude": 6.8633
+		"latitude": 47.6425,
+		"longitude": 6.8442
 	},
 	{
-		"name": "UTBM Building I Amphitheater (Belfort)",
-		"latitude": 47.6365,
-		"longitude": 6.8652
+		"name": "UTBM Building E Amphitheater (Belfort)",
+		"latitude": 47.6416,
+		"longitude": 6.8450
 	},
 	{
 		"name": "CROUS J-P Sartre (Belfort)",
-		"latitude": 47.6399,
-		"longitude": 6.8699
+		"latitude": 47.6335,
+		"longitude": 6.8517
 	},
 	{
 		"name": "Bakery (Belfort)",
-		"latitude": 47.6348,
-		"longitude": 6.8666
+		"latitude": 47.6406,
+		"longitude": 6.8329
 	},
 	{
 		"name": "Drugstore (Belfort)",
-		"latitude": 47.6359,
-		"longitude": 6.8635
+		"latitude": 47.6375,
+		"longitude": 6.8536
 	},
 	{
 		"name": "Library (Belfort)",
-		"latitude": 47.6357,
-		"longitude": 6.8619
+		"latitude": 47.6395,
+		"longitude": 6.8495
 	},
 	{
 		"name": "Cinema (Belfort)",
-		"latitude": 47.6358,
-		"longitude": 6.8623
-	},
-	{
-		"name": "CROUS J-P Sartre (Belfort)",
-		"latitude": 47.6354,
-		"longitude": 6.864
+		"latitude": 47.6149,
+		"longitude": 6.8364
 	},
 	{
 		"name": "Gas station (Belfort)",
-		"latitude": 47.6339,
-		"longitude": 6.8637
+		"latitude": 47.6343,
+		"longitude": 6.8584
 	},
 	{
 		"name": "Train station (Belfort)",
-		"latitude": 47.6382,
-		"longitude": 6.8634
+		"latitude": 47.6343,
+		"longitude": 6.8511
 	},
 	{
 		"name": "Train station (Montbéliard)",
-		"latitude": 47.5104,
-		"longitude": 6.8017
+		"latitude": 47.5105,
+		"longitude": 6.7988
 	},
 	{
 		"name": "CROUS René Thom (Montbéliard)",
-		"latitude": 47.5174,
-		"longitude": 6.7942
+		"latitude": 47.5108,
+		"longitude": 6.7951
 	},
 	{
 		"name": "Gas station (Montbéliard)",
-		"latitude": 47.5097,
-		"longitude": 6.8059
+		"latitude": 47.5109,
+		"longitude": 6.7861
 	},
 	{
 		"name": "Park (Montbéliard)",
-		"latitude": 47.5126,
-		"longitude": 6.8027
+		"latitude": 47.5057,
+		"longitude": 6.7982
 	},
 	{
 		"name": "Campus' Parking (Montbéliard)",
-		"latitude": 47.517,
-		"longitude": 6.7948
+		"latitude": 47.4956,
+		"longitude": 6.8027
 	},
 	{
 		"name": "University restaurant (Montbéliard)",
-		"latitude": 47.5152,
-		"longitude": 6.7935
+		"latitude": 47.4957,
+		"longitude": 6.8030
 	},
 	{
 		"name": "UFR STGI Building C room MM2D (Montbéliard)",
-		"latitude": 47.5174,
-		"longitude": 6.7955
+		"latitude": 47.4954,
+		"longitude": 6.8042
 	},
 	{
 		"name": "UFR STGI Building A Secretariat (Montbéliard)",
-		"latitude": 47.5175,
-		"longitude": 6.7941
+		"latitude": 47.4952,
+		"longitude": 6.8040
 	},
 	{
 		"name": "University Library (Montbéliard)",
-		"latitude": 47.5171,
-		"longitude": 6.7962
+		"latitude": 47.4952,
+		"longitude": 6.8040
 	},
 	{
 		"name": "CROUS Portes du Jura (Montbéliard)",
-		"latitude": 47.5181,
-		"longitude": 6.7925
+		"latitude": 47.4946,
+		"longitude": 6.8022
 	},
 	{
-		"name": "Mac Donalds Montbéliard (Montbéliard)",
-		"latitude": 47.5172,
-		"longitude": 6.7937
+		"name": "Mac Donalds (Montbéliard)",
+		"latitude": 47.5021,
+		"longitude": 6.8117
 	},
 	{
 		"name": "Killian's house (Joncherey-Delle)",
-		"latitude": 47.5053,
-		"longitude": 6.9366
+		"latitude": 47.5291,
+		"longitude": 7.0012
 	},
 	{
 		"name": "Bond (Joncherey-Delle)",
-		"latitude": 47.5029,
-		"longitude": 6.9401
+		"latitude": 47.5313,
+		"longitude": 7.0150
 	},
 	{
 		"name": "Gas station (Joncherey-Delle)",
-		"latitude": 47.5026,
-		"longitude": 6.9392
+		"latitude": 47.5070,
+		"longitude": 7.0033
 	},
 	{
 		"name": "Bakery (Joncherey-Delle)",
-		"latitude": 47.5047,
-		"longitude": 6.9402
+		"latitude": 47.5088,
+		"longitude": 6.9976
 	},
 	{
 		"name": "Intermarché (Joncherey-Delle)",
-		"latitude": 47.5045,
-		"longitude": 6.939
+		"latitude": 47.5096,
+		"longitude": 7.0017
 	},
 	{
 		"name": "Cycle path (Joncherey-Delle)",
-		"latitude": 47.506,
-		"longitude": 6.9377
+		"latitude": 47.5173,
+		"longitude": 7.0022
 	},
 	{
 		"name": "Coffee (Joncherey-Delle)",
-		"latitude": 47.5031,
-		"longitude": 6.9414
+		"latitude": 47.5062,
+		"longitude": 6.9914
+	},
+	{
+		"name": "Mac Donalds (Joncherey-Delle)",
+		"latitude": 47.5037,
+		"longitude": 7.0000
 	}
 ]

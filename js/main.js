@@ -10,17 +10,15 @@ const locations = locationsData.map(
 
 const friendsArray = [
 	new Friend("Antonin", locations[0]),
-	new Friend("Killian", locations[29]),
+	new Friend("Killian", locations[15]),
 ];
 
 const matrix = new OriginDestination(locations, friendsArray);
 
 console.log(matrix);
 
-const meetingLocation = matrix.findEarliestMeetingPoint(
-	matrix.locations,
-	matrix.originDestinationMatrix,
-	matrix.friends
-);
+const meetingLocation = matrix.findEarliestMeetingPoint();
+
+matrix.generateRouteForFriends();
 
 console.log(`The earliest meeting point is ${meetingLocation.name}`);
