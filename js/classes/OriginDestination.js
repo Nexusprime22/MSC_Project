@@ -71,6 +71,14 @@ export class OriginDestination {
 		}
 
 		this.meetingLocation = earliestMeetingLocation;
+		// Add a popup to indicate what's the meeting point
+		L.popup()
+			.setLatLng([
+				this.meetingLocation.latitude,
+				this.meetingLocation.longitude,
+			])
+			.setContent(`The earliest meeting point is ${this.meetingLocation.name}`)
+			.openOn(this.map);
 
 		return this.meetingLocation;
 	}
