@@ -1,24 +1,38 @@
 [
 	{
 		"name": "Guillaume",
-		"latitude": 47.6249,
-		"longitude": 6.8462
+		"currentLocation": {
+			"name": "Cycle path (Joncherey-Delle)",
+			"latitude": 47.53406649178647,
+			"longitude": 6.9989991188049325
+		},
+		"iconUrl": "guillaume.png"
 	},
 	{
 		"name": "Antonin",
-		"latitude": 47.6438,
-		"longitude": 6.8325
+		"currentLocation": {
+			"name": "Bond (Joncherey-Delle)",
+			"latitude": 47.53284231042329,
+			"longitude": 7.014008760452271
+		},
+		"iconUrl": "antonin.png"
 	},
-
-	{
-		"name": "Isuru",
-		"latitude": 47.6416,
-		"longitude": 6.8450
-	},
-
 	{
 		"name": "Killian",
-		"latitude": 47.5291,
-		"longitude": 7.0012
+		"currentLocation": {
+			"name": "Bakery (Joncherey-Delle)",
+			"latitude": 47.50760984426169,
+			"longitude": 6.9990259408950815
+		},
+		"iconUrl": "killian.png"
+	},
+	{
+		"name": "Isuru",
+		"currentLocation": {
+			"name": "Coffee (Joncherey-Delle)",
+			"latitude": 47.506357867598034,
+			"longitude": 6.997596323490144
+		},
+		"iconUrl": "isuru.png"
 	}
 ]

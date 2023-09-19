@@ -35,21 +35,32 @@ export class OriginDestination {
 				.addTo(this.map)
 				.bindPopup(location.name); // Display the name as a popup when the marker is clicked
 		});
-
-		// Temporary code to get the latitude and longitude on click
-		this.map.on("click", function (e) {
-			alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
-		});
 	}
 
 	// Function to find the earliest meeting point
 	findEarliestMeetingPoint() {
 		let friendsLocation = [];
 
-		console.log(friendsLocation);
-		// Loop through all friends to store their current location in an array
+		// Loop through all friends to store their current location in an array and show them on the map
 		for (let x = 0; x < this.friends.length; x++) {
 			friendsLocation.push(this.friends[x].currentLocation);
+			// Custom icon of the person
+			let personIcon = L.icon({
+				iconUrl: "./media/icons/" + this.friends[x].iconUrl,
+				iconSize: [52, 52], // Adjust the size as needed
+			});
+
+			L.marker(
+				[
+					this.friends[x].currentLocation.latitude,
+					this.friends[x].currentLocation.longitude,
+				],
+				{ icon: personIcon }
+			)
+				.addTo(this.map)
+				.bindPopup(
+					`${this.friends[x].name} is currently at ${this.friends[x].currentLocation.name}`
+				);
 		}
 
 		let earliestMeetingLocation = null;
@@ -62,22 +73,11 @@ export class OriginDestination {
 			// Calculate the maximum travel time for all friends to reach the meeting location
 			for (const personLocation of friendsLocation) {
 				const personLocationIndex = this.locations.indexOf(personLocation);
-				// Check if personLocationIndex is a valid index in the matrix
 				if (
-					personLocationIndex !== -1 &&
-					this.originDestinationMatrix[personLocationIndex]
+					this.originDestinationMatrix[personLocationIndex][i] > maxTravelTime
 				) {
-					if (
-						this.originDestinationMatrix[personLocationIndex][i] > maxTravelTime
-					) {
-						maxTravelTime =
-							this.originDestinationMatrix[personLocationIndex][i];
-					}
+					maxTravelTime = this.originDestinationMatrix[personLocationIndex][i];
 				}
-				// else {
-				// 	// Handle the case where personLocation is not found in this.locations
-				// 	console.error(`Person location not found: ${personLocation}`);
-				// }
 			}
 
 			// If the calculated maximum travel time is less than the current earliest time, update the result
@@ -94,10 +94,18 @@ export class OriginDestination {
 				this.meetingLocation.latitude,
 				this.meetingLocation.longitude,
 			])
-			.setContent(`The earliest meeting point is ${this.meetingLocation.name}`)
+			.setContent(
+				`The earliest meeting point is ${this.meetingLocation.name} and will take place in ${earliestMeetingTime} minutes.`
+			)
 			.openOn(this.map);
 
-		return this.meetingLocation;
+		// Center the map on the popup's coordinates
+		this.map.setView(
+			[this.meetingLocation.latitude, this.meetingLocation.longitude],
+			15
+		);
+
+		return { location: this.meetingLocation, time: earliestMeetingTime };
 	}
 
 	generateRouteForFriends() {
@@ -119,6 +127,7 @@ export class OriginDestination {
 				fitSelectedRoutes: false,
 				draggableWaypoints: false,
 				routeWhileDragging: false,
+				show: false, // To disable the itinerary
 				createMarker: function () {
 					return null;
 				},
