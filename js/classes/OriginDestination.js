@@ -35,16 +35,20 @@ export class OriginDestination {
 				.addTo(this.map)
 				.bindPopup(location.name); // Display the name as a popup when the marker is clicked
 		});
+
+		// Temporary code to get the latitude and longitude on click
+		this.map.on("click", function (e) {
+			alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+		});
 	}
 
 	// Function to find the earliest meeting point
 	findEarliestMeetingPoint() {
 		let friendsLocation = [];
 
-		console.log(friendsLocation)
+		console.log(friendsLocation);
 		// Loop through all friends to store their current location in an array
 		for (let x = 0; x < this.friends.length; x++) {
-			
 			friendsLocation.push(this.friends[x].currentLocation);
 		}
 
@@ -59,11 +63,17 @@ export class OriginDestination {
 			for (const personLocation of friendsLocation) {
 				const personLocationIndex = this.locations.indexOf(personLocation);
 				// Check if personLocationIndex is a valid index in the matrix
-				if (personLocationIndex !== -1 && this.originDestinationMatrix[personLocationIndex]) {
-					if (this.originDestinationMatrix[personLocationIndex][i] > maxTravelTime) {
-						maxTravelTime = this.originDestinationMatrix[personLocationIndex][i];
+				if (
+					personLocationIndex !== -1 &&
+					this.originDestinationMatrix[personLocationIndex]
+				) {
+					if (
+						this.originDestinationMatrix[personLocationIndex][i] > maxTravelTime
+					) {
+						maxTravelTime =
+							this.originDestinationMatrix[personLocationIndex][i];
 					}
-				} 
+				}
 				// else {
 				// 	// Handle the case where personLocation is not found in this.locations
 				// 	console.error(`Person location not found: ${personLocation}`);
