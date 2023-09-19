@@ -1,0 +1,24 @@
+[
+	{
+		"name": "Guillaume",
+		"latitude": 47.6249,
+		"longitude": 6.8462
+	},
+	{
+		"name": "Antonin",
+		"latitude": 47.6438,
+		"longitude": 6.8325
+	},
+
+	{
+		"name": "Isuru",
+		"latitude": 47.6416,
+		"longitude": 6.8450
+	},
+
+	{
+		"name": "Killian",
+		"latitude": 47.5291,
+		"longitude": 7.0012
+	}
+]
