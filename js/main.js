@@ -57,10 +57,9 @@ const matrix = new OriginDestination(locations, friendsArray);
 
 console.log(matrix);
 
-const meetingLocation = matrix.findEarliestMeetingPoint();
-
+matrix.findEarliestMeetingPoint();
 matrix.generateRouteForFriends();
 
-console.log(
-	`The earliest meeting point is ${meetingLocation.location.name} and will take place in ${meetingLocation.time} minutes.`
-);
+// console.log(
+// 	`The earliest meeting point is ${meetingLocation.location.name} and will take place in ${meetingLocation.time} minutes.`
+// );
