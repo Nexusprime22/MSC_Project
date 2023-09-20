@@ -16,21 +16,20 @@ body {
 	padding: 0px;
 }
 
-main {
-	position: relative;
-}
-
 #map {
+	position: absolute;
+	width: 100%;
+	height: 100%;
 	z-index: 0;
-	margin: 0 auto;
-	width: 80%;
-	height: 800px;
-	position: relative;
 }
 /* Header styles */
 
 header {
-	margin: 1rem 1rem;
+	margin: 1rem 0;
+	position: absolute;
+	z-index: 10;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 header div.fadeIn {
@@ -42,8 +41,12 @@ header div.fadeOut {
 	animation: fadeOut 0.2s linear;
 }
 
-/* Set Area button styles */
-header div.buttonChangeFriendsLocation button {
+header div.headerButtons {
+	display: flex;
+}
+
+/* Button styles */
+header div.headerButtons button {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1.8rem;
 	font-weight: bold;
@@ -56,29 +59,36 @@ header div.buttonChangeFriendsLocation button {
 	border: none;
 	border-radius: 50px;
 	padding: 7px 15px;
+	margin-right: 7px;
 }
 
-header div.buttonChangeFriendsLocation button:hover {
+header div.headerButtons button:hover {
 	background-color: #df7575;
 	transition: 0.5s background-color;
 }
 
-header div.buttonChangeFriendsLocation button svg.buttonIcon {
+header div.headerButtons button:disabled,
+button[disabled] {
+	opacity: 0.65;
+	cursor: not-allowed;
+}
+
+header div.headerButtons button svg.buttonIcon {
 	width: 2rem;
 	height: 2rem;
 	fill: #f8f8f8;
 	margin-right: 0.5em;
 }
 
-header div.buttonChangeFriendsLocation button span {
+header div.headerButtons button span {
 	margin-top: 3px;
 }
 
 /* Modal styles */
 header div.changeFriendsLocationModal {
 	display: none;
-	position: fixed;
-	z-index: 1;
+	/* position: fixed; */
+	z-index: 10;
 	top: 0;
 	right: 0;
 	bottom: 0;
@@ -204,7 +214,7 @@ header
 	div.modalDialog
 	div.modalContent
 	.modalBody
-	input {
+	select {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1.5rem;
 	font-weight: normal;
