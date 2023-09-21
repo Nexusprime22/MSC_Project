@@ -1,4 +1,8 @@
-import { generateMatrixWithRandomValues } from "../utils/tools.js";
+import {
+	randomIntFromInterval,
+	generateMatrixWithRandomValues,
+	log,
+} from "../utils/tools.js";
 import { closeModal } from "../utils/handleModal.js";
 import originDestinationData from "../../data/originDestinationData.json" assert { type: "json" };
 import routeColors from "../../data/routeColors.json" assert { type: "json" };
@@ -40,14 +44,120 @@ export class OriginDestination {
 		// Call the function to find the meeting point when the button is clicked
 		document.querySelector("#buttonFindEarliestMeetingPoint").onclick = () => {
 			this.findEarliestMeetingPoint();
+
 			// Enable the button to generate routes once the meeting point is found
 			document.querySelector("#buttonGenerateRouteForFriends").disabled = false;
+
+			// Disable the button to follow the friends once the routes are generated
+			document.querySelector(
+				"#buttonFollowFriendsToMeetingPoint"
+			).disabled = true;
 		};
 
 		// Call the function to generate the routes for friends when the button is clicked
 		document.querySelector("#buttonGenerateRouteForFriends").onclick = () => {
 			this.generateRouteForFriends();
+
+			// Enable the button to follow the friends once the routes are generated
+			document.querySelector(
+				"#buttonFollowFriendsToMeetingPoint"
+			).disabled = false;
+
+			// Disable the button to generate routes
+			document.querySelector("#buttonGenerateRouteForFriends").disabled = true;
 		};
+
+		// Call the function to follow the friends when the button is clicked
+		document.querySelector("#buttonFollowFriendsToMeetingPoint").onclick =
+			() => {
+				// Start following friends to the meeting point
+				this.followFriendsToMeetingPoint();
+
+				// Disable the button to follow friends
+				document.querySelector(
+					"#buttonFollowFriendsToMeetingPoint"
+				).disabled = true;
+			};
+	}
+
+	followFriendsToMeetingPoint() {
+		// Function to periodically update friend positions
+		const updateFriendPositions = () => {
+			const arrivedFriends = new Set(); // Use a Set to keep track of arrived friends
+
+			for (let x = 0; x < this.friends.length; x++) {
+				const friend = this.friends[x];
+				const routingControl = friend.routingControl;
+
+				// Check if routingControl is defined
+				if (routingControl) {
+					// Get the first route from routingControl
+					const route = routingControl._routes[0];
+
+					// Get all coordinates of the route
+					const currentLatLng = route.coordinates;
+
+					// Check if the friend has already arrived
+					if (friend.hasArrived) {
+						arrivedFriends.add(friend); // Add the friend to the Set of arrived friends
+						continue; // Skip this friend if they have arrived
+					}
+
+					// Get the travel time in seconds
+					const travelTime = route.summary.totalTime;
+					// Calculate the travel time per coordinate in seconds
+					const travelTimePerCoordinate = travelTime / currentLatLng.length;
+
+					// Generate a random number between 0 and 2 in order to have a sort of tracking by advancing or not on the road
+					const randomNumber = randomIntFromInterval(0, 2);
+
+					// If the random number is 0, it means that the friend doesn't move so he's losing time
+					if (randomNumber == 0) {
+						friend.trackTravelTime -= travelTimePerCoordinate;
+					} else if (randomNumber == 1) {
+						// No change to trackTravelTime
+					}
+					// Else, the random number is 2, it means that the friend skipped a coordinate so he's gaining time
+					else {
+						friend.trackTravelTime += travelTimePerCoordinate;
+					}
+
+					// Calculate the index for the next position update
+					const currentPositionIndex = friend.currentPositionIndex || 0;
+					const newPositionIndex = currentPositionIndex + randomNumber;
+
+					// Check if there are more coordinates in the route
+					if (newPositionIndex < currentLatLng.length) {
+						// Get the new position from the route coordinates
+						const newLatLng = currentLatLng[newPositionIndex];
+
+						// Update the friend's position
+						friend.currentLocation.latitude = newLatLng.lat;
+						friend.currentLocation.longitude = newLatLng.lng;
+
+						// Update the friend's marker on the map
+						this.updateFriendMarker(x, friend.trackTravelTime);
+
+						// Store the updated position index for the friend
+						friend.currentPositionIndex = newPositionIndex;
+					} else {
+						// The friend has reached the destination
+						friend.hasArrived = true; // Mark the friend as arrived
+						arrivedFriends.add(friend); // Add the friend to the Set of arrived friends
+						log(`${friend.name} has arrived at the meeting point!`);
+					}
+				}
+			}
+
+			// If all friends arrived
+			if (arrivedFriends.size === this.friends.length) {
+				log("All friends have arrived!");
+				clearInterval(interval); // Stop the interval when all friends have arrived
+			}
+		};
+
+		// Update friend positions periodically
+		let interval = setInterval(updateFriendPositions, 500); // Update every half of a second
 	}
 
 	placeFriendsToLocations() {
@@ -77,12 +187,15 @@ export class OriginDestination {
 			)
 				.addTo(this.map)
 				.bindPopup(
-					`${this.friends[x].name} is currently at ${this.friends[x].currentLocation.name}`
+					`${this.friends[x].name} is currently at ${this.friends[x].currentLocation.name}.`
 				);
+			log(
+				`${this.friends[x].name} is currently at ${this.friends[x].currentLocation.name}.`
+			);
 		}
 	}
 
-	updateFriendMarker(friendIndex) {
+	updateFriendMarker(friendIndex, trackTravelTime) {
 		const offset = 0.001; // Little offset to prevent overlap of friends
 		const friend = this.friends[friendIndex];
 		const location = friend.currentLocation;
@@ -110,6 +223,26 @@ export class OriginDestination {
 			.addTo(this.map)
 			.bindPopup(`${friend.name} is currently at ${location.name}`);
 
+		// If we haven't specified travel time
+		if (trackTravelTime == null) {
+			log(`${friend.name} is currently at ${location.name}.`);
+		} else {
+			// Show an alert in the logs if he is 10 or more early
+			if (trackTravelTime > 10) {
+				log(
+					`${friend.name} will be ${Math.round(trackTravelTime)} seconds early.`
+				);
+			}
+			// Show an alert in the logs if he is -10 or less late
+			if (trackTravelTime < -10) {
+				log(
+					`${friend.name} will be ${Math.abs(
+						Math.round(trackTravelTime)
+					)} seconds late.`
+				);
+			}
+		}
+
 		// Close the modal
 		closeModal();
 	}
@@ -126,6 +259,10 @@ export class OriginDestination {
 
 			// Disable the button to generate routes if a friend's location is changed
 			document.querySelector("#buttonGenerateRouteForFriends").disabled = true;
+			// Disable the button to follow friends if a friend's location is changed
+			document.querySelector(
+				"#buttonFollowFriendsToMeetingPoint"
+			).disabled = true;
 
 			// Get the index of the new location
 			let index = this.locations.findIndex((location) => {
@@ -140,7 +277,7 @@ export class OriginDestination {
 			this.friends[friendIndex].currentLocation = this.locations[index];
 
 			// Update the friend's marker on the map
-			this.updateFriendMarker(friendIndex);
+			this.updateFriendMarker(friendIndex, null);
 
 			// Go back to initial view
 			this.map.setView([47.57, 6.86], 12);
@@ -157,10 +294,14 @@ export class OriginDestination {
 
 	// Function to find the earliest meeting point
 	findEarliestMeetingPoint() {
+		// Remove existing routes before generating new ones
+		this.removeExistingRoutes();
 		let friendsLocation = [];
 
-		// Loop through all friends to store their current location in an array
+		// Loop through all friends to store their current location in an array but also to reset some values used for the follow
 		for (let x = 0; x < this.friends.length; x++) {
+			this.friends[x].trackTravelTime = 0;
+			this.friends[x].hasArrived = false;
 			friendsLocation.push(this.friends[x].currentLocation);
 		}
 
@@ -211,6 +352,9 @@ export class OriginDestination {
 				`The earliest meeting point is ${this.meetingLocation.name} and will take place in ${earliestMeetingTime} minutes.`
 			)
 			.openPopup(); // Open the popup when the marker is added;
+		log(
+			`The earliest meeting point is ${this.meetingLocation.name} and will take place in ${earliestMeetingTime} minutes.`
+		);
 
 		// Center the map on the popup's coordinates
 		this.map.setView(
@@ -226,7 +370,14 @@ export class OriginDestination {
 		this.removeExistingRoutes();
 
 		for (let x = 0; x < this.friends.length; x++) {
-			const routeColor = routeColors.colors[x % routeColors.colors.length]; // Get a color from the array
+			const routeColor = routeColors.colors[x % routeColors.colors.length];
+
+			// Clear old routes and tracking information for each friend
+			this.friends[x].routingControl = null;
+			this.friends[x].currentPositionIndex = 0;
+			this.friends[x].hasArrived = false;
+			this.friends[x].trackTravelTime = 0;
+
 			const routingControl = L.Routing.control({
 				waypoints: [
 					// Origin is the location of the friend

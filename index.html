@@ -66,6 +66,24 @@
 						<span>GENERATE ROUTES</span>
 					</button>
 				</div>
+
+				<!-- Button to follow friends during their way to the meeting point -->
+				<div class="buttonFollowFriendsToMeetingPoint">
+					<button id="buttonFollowFriendsToMeetingPoint" disabled>
+						<svg
+							class="buttonIcon"
+							xmlns="http://www.w3.org/2000/svg"
+							height="1em"
+							viewBox="0 0 448 512"
+						>
+							<!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+							<path
+								d="M429.6 92.1c4.9-11.9 2.1-25.6-7-34.7s-22.8-11.9-34.7-7l-352 144c-14.2 5.8-22.2 20.8-19.3 35.8s16.1 25.8 31.4 25.8H224V432c0 15.3 10.8 28.4 25.8 31.4s30-5.1 35.8-19.3l144-352z"
+							/>
+						</svg>
+						<span>FOLLOW FRIENDS</span>
+					</button>
+				</div>
 			</div>
 
 			<!-- Modal -->
@@ -144,6 +162,13 @@
 		</header>
 		<!-- Create a div to hold the map -->
 		<div id="map" class="map"></div>
+
+		<!-- Add a <div> element to display logs -->
+		<div id="logWindow" class="log-window">
+			<h2>Log Window</h2>
+			<pre id="logContent"></pre>
+		</div>
+
 		<!-- Add scripts -->
 		<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
 		<script src="./library/leaflet-routing-machine.js"></script>

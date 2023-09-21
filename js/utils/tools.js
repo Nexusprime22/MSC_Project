@@ -1,5 +1,5 @@
 // Function to generate a random value between a minimum and maximum
-function randomIntFromInterval(min, max) {
+export function randomIntFromInterval(min, max) {
 	return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
@@ -18,4 +18,12 @@ export function generateMatrixWithRandomValues(locations, min, max) {
 		}
 	}
 	return originDestinationMatrix;
+}
+
+// Function to add a log message to the log window
+export function log(message) {
+	const logContent = document.getElementById("logContent");
+	const timestamp = new Date().toLocaleTimeString();
+	logContent.innerHTML += `[${timestamp}] ${message}\n`;
+	logContent.scrollTop = logContent.scrollHeight; // Scroll to the bottom
 }

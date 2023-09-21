@@ -8,8 +8,6 @@ const locations = locationsData.map(
 	(data) => new Location(data.name, data.latitude, data.longitude)
 );
 
-console.log(locations);
-
 // const friendsArray = [
 // 	new Friend("Antonin", locations[0]),
 // 	new Friend("Killian", locations[15]),
@@ -54,8 +52,6 @@ const friendsArray = friendsList.map((friend) => {
 });
 
 const matrix = new OriginDestination(locations, friendsArray);
-
-console.log(matrix);
 
 // matrix.findEarliestMeetingPoint();
 // matrix.generateRouteForFriends();
