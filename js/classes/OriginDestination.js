@@ -89,8 +89,12 @@ export class OriginDestination {
 				const friend = this.friends[x];
 				const routingControl = friend.routingControl;
 
-				// Check if routingControl is defined
-				if (routingControl) {
+				// Check if routingControl is defined and we find routes
+				if (
+					routingControl != undefined &&
+					routingControl != null &&
+					routingControl._routes != undefined
+				) {
 					// Get the first route from routingControl
 					const route = routingControl._routes[0];
 
@@ -394,7 +398,7 @@ export class OriginDestination {
 				fitSelectedRoutes: false,
 				draggableWaypoints: false,
 				routeWhileDragging: false,
-				show: false, // To disable the itinerary
+				// show: false, // To disable the itinerary
 				createMarker: function () {
 					return null;
 				},
@@ -407,6 +411,57 @@ export class OriginDestination {
 			// Store the routing control instance for future removal
 			this.friends[x].routingControl = routingControl;
 		}
+
+		// Get all elements with the class "leaflet-routing-container" which contain the itinerary
+		const routingContainers = document.querySelectorAll(
+			".leaflet-routing-container"
+		);
+
+		// Create the button which will allow to close the itinerary
+		const closeButton = document.createElement("span");
+		closeButton.className = "closeItineraryButton";
+		closeButton.setAttribute("aria-hidden", "true");
+		closeButton.style.cssText =
+			"right: 5px; position: absolute; cursor: pointer; font-size: 3rem; top: -3px;";
+		closeButton.textContent = "×"; // Set the text content to "×"
+
+		// Loop through each "leaflet-routing-container" element and append the child
+		routingContainers.forEach((container) => {
+			container.appendChild(closeButton.cloneNode(true));
+		});
+
+		// Detect a click
+		document.addEventListener("click", function (event) {
+			const clickedElement = event.target;
+
+			// Check if the clicked element has the "closeItineraryButton" class
+			if (clickedElement.classList.contains("closeItineraryButton")) {
+				// Access the parent element
+				const parentElement = clickedElement.parentNode;
+				// Hide the itinerary tab
+				parentElement.classList.add("leaflet-routing-container-hide");
+				parentElement.style.cursor = "pointer";
+				// Hide the cross
+				clickedElement.style.display = "none";
+
+				// Prevent the click event from propagating further
+				event.stopPropagation();
+			}
+
+			// Check if the clicked element has the "leaflet-routing-container" class
+			if (clickedElement.classList.contains("leaflet-routing-container")) {
+				// If the clicked element has the class to hide the itinerary, we remove it to show the itinerary
+				if (
+					clickedElement.classList.contains("leaflet-routing-container-hide")
+				) {
+					clickedElement.classList.remove("leaflet-routing-container-hide");
+					clickedElement.children[1].style.display = "block";
+				}
+
+				// Prevent the click event from propagating further
+				event.stopPropagation();
+			}
+		});
 	}
 
 	removeExistingRoutes() {

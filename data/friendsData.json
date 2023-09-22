@@ -6,7 +6,12 @@
 			"latitude": 47.53406649178647,
 			"longitude": 6.9989991188049325
 		},
-		"iconUrl": "guillaume.png"
+		"iconUrl": "guillaume.png",
+		"currentPositionIndex": 0,
+		"hasArrived": false,
+		"marker": null,
+		"routingControl": null,
+		"trackTravelTime": 0
 	},
 	{
 		"name": "Antonin",
@@ -15,7 +20,12 @@
 			"latitude": 47.53284231042329,
 			"longitude": 7.014008760452271
 		},
-		"iconUrl": "antonin.png"
+		"iconUrl": "antonin.png",
+		"currentPositionIndex": 0,
+		"hasArrived": false,
+		"marker": null,
+		"routingControl": null,
+		"trackTravelTime": 0
 	},
 	{
 		"name": "Killian",
@@ -24,7 +34,12 @@
 			"latitude": 47.50760984426169,
 			"longitude": 6.9990259408950815
 		},
-		"iconUrl": "killian.png"
+		"iconUrl": "killian.png",
+		"currentPositionIndex": 0,
+		"hasArrived": false,
+		"marker": null,
+		"routingControl": null,
+		"trackTravelTime": 0
 	},
 	{
 		"name": "Isuru",
@@ -33,6 +48,11 @@
 			"latitude": 47.506357867598034,
 			"longitude": 6.997596323490144
 		},
-		"iconUrl": "isuru.png"
+		"iconUrl": "isuru.png",
+		"currentPositionIndex": 0,
+		"hasArrived": false,
+		"marker": null,
+		"routingControl": null,
+		"trackTravelTime": 0
 	}
 ]

@@ -43,7 +43,16 @@ const friendsArray = friendsList.map((friend) => {
 
 	if (index !== -1) {
 		// If the element is found, use it to create a new Friend
-		return new Friend(friend.name, locations[index], friend.iconUrl);
+		return new Friend(
+			friend.name,
+			locations[index],
+			friend.iconUrl,
+			friend.currentPositionIndex,
+			friend.hasArrived,
+			friend.marker,
+			friend.routingControl,
+			friend.trackTravelTime
+		);
 	} else {
 		// Handle the case where the element is not found (optional)
 		console.log(`Location not found for ${friend.name}`);
