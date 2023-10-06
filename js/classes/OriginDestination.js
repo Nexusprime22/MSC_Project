@@ -17,6 +17,7 @@ export class OriginDestination {
 		this.originDestinationMatrix = originDestinationData;
 
 		this.meetingLocation;
+		this.isTracking = false; // Track if tracking is active
 
 		// Create a map object and set the view to a specific location and zoom level
 		this.map = L.map("map").setView([47.57, 6.86], 12);
@@ -70,13 +71,46 @@ export class OriginDestination {
 		// Call the function to follow the friends when the button is clicked
 		document.querySelector("#buttonFollowFriendsToMeetingPoint").onclick =
 			() => {
-				// Start following friends to the meeting point
-				this.followFriendsToMeetingPoint();
+				if (!this.isTracking) {
+					// Start following friends to the meeting point
+					this.followFriendsToMeetingPoint();
 
-				// Disable the button to follow friends
-				document.querySelector(
-					"#buttonFollowFriendsToMeetingPoint"
-				).disabled = true;
+					// Disable the button to change locations
+					document.querySelector(
+						"#buttonChangeFriendsLocation"
+					).disabled = true;
+
+					// Disable the button to find a meeting point
+					document.querySelector(
+						"#buttonFindEarliestMeetingPoint"
+					).disabled = true;
+
+					// Update the button text to "Cancel Tracking" when tracking starts
+					document.querySelector(
+						"#buttonFollowFriendsToMeetingPoint span"
+					).textContent = "CANCEL TRACKING";
+
+					this.isTracking = true;
+				} else {
+					// Stop tracking when the button is clicked again
+					clearInterval(this.trackingInterval);
+
+					// Enable the button to change friends location once tracking is canceled
+					document.querySelector(
+						"#buttonChangeFriendsLocation"
+					).disabled = false;
+					// Enable the button to find the meeting point once tracking is canceled
+					document.querySelector(
+						"#buttonFindEarliestMeetingPoint"
+					).disabled = false;
+
+					// Update the button text to "CHANGE FRIENDS LOCATION" when tracking is canceled
+					document.querySelector(
+						"#buttonFollowFriendsToMeetingPoint span"
+					).textContent = "FOLLOW FRIENDS";
+
+					this.isTracking = false;
+				}
 			};
 	}
 
@@ -156,12 +190,19 @@ export class OriginDestination {
 			// If all friends arrived
 			if (arrivedFriends.size === this.friends.length) {
 				log("All friends have arrived!");
-				clearInterval(interval); // Stop the interval when all friends have arrived
+				clearInterval(this.trackingInterval); // Stop the interval when all friends have arrived
+				// Enable the button to change friends location once the tracking is finished
+				document.querySelector("#buttonChangeFriendsLocation").disabled = false;
+				// Enable the button to find the meeting point once the tracking is finished
+				document.querySelector(
+					"#buttonFindEarliestMeetingPoint"
+				).disabled = false;
+				this.isTracking = false;
 			}
 		};
 
 		// Update friend positions periodically
-		let interval = setInterval(updateFriendPositions, 500); // Update every half of a second
+		this.trackingInterval = setInterval(updateFriendPositions, 500); // Update every half of a second
 	}
 
 	placeFriendsToLocations() {
