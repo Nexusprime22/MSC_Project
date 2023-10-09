@@ -2,6 +2,8 @@ import {
 	randomIntFromInterval,
 	generateMatrixWithRandomValues,
 	log,
+	isTransitive,
+	applyTransitiveClosure,
 } from "../utils/tools.js";
 import { closeModal } from "../utils/handleModal.js";
 import originDestinationData from "../../data/originDestinationData.json" assert { type: "json" };
@@ -15,6 +17,18 @@ export class OriginDestination {
 
 		// Static matrix filled manually
 		this.originDestinationMatrix = originDestinationData;
+
+		// console.log("originDestinationData:", originDestinationData);
+		console.log("Matrix dimensions:", originDestinationData.length, "x", originDestinationData[0].length);
+		
+		// we check if the json is a transitive matrix
+		if(!isTransitive(this.originDestinationMatrix)){
+			console.log("the matrix is not transitive, we apply transitive closure");
+			// this.originDestinationMatrix = applyTransitiveClosure(this.originDestinationMatrix);
+			console.log("is matrix transitive from json file now ? "+isTransitive(this.originDestinationMatrix));
+		}
+		// console.log("originDestinationData:", originDestinationData);
+		// console.log("Matrix dimensions:", originDestinationData.length, "x", originDestinationData[0].length);		
 
 		this.meetingLocation;
 		this.isTracking = false; // Track if tracking is active
