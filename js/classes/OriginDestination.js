@@ -1,10 +1,5 @@
-import {
-	randomIntFromInterval,
-	generateMatrixWithRandomValues,
-	log,
-	isTransitive,
-	applyTransitiveClosure,
-} from "../utils/tools.js";
+import * as tools from "../utils/tools.js";
+
 import { closeModal } from "../utils/handleModal.js";
 import originDestinationData from "../../data/originDestinationData.json" assert { type: "json" };
 import routeColors from "../../data/routeColors.json" assert { type: "json" };
@@ -18,14 +13,44 @@ export class OriginDestination {
 		// Static matrix filled manually
 		this.originDestinationMatrix = originDestinationData;
 
+		// we check if the json is a squared matrix
+		if(!tools.isItSquaredMatrix(this.originDestinationMatrix)){
+			console.log("the matrix is not a squared matrix, at a specific row, we don't have the same number of columns as the number of rows");
+		}
+		else{
+			console.log("matrix is a squared matrix, we can use it");
+		}
+
 		// console.log("originDestinationData:", originDestinationData);
 		console.log("Matrix dimensions:", originDestinationData.length, "x", originDestinationData[0].length);
 		
+		// we check if the json is a reflexive matrix
+		if(!tools.isMatrixReflexive(this.originDestinationMatrix)){
+			console.log("the matrix is not reflexive, there are values different from 0 in diagonal");
+			// we make it reflexive
+			this.originDestinationMatrix = tools.makeMatrixReflexive(this.originDestinationMatrix);
+
+		}
+		else{
+			console.log("matrix is reflexive, only 0 on diagonal");
+		}
+
+		// we check if the json is a symmetrical matrix
+		if(!tools.isMatrixSymmetrical(this.originDestinationMatrix)){
+			console.log("the matrix is not symmetrical, at (i,j) we don't have the same value than at (j,i)");
+			// we make it symmetrical
+			this.originDestinationMatrix = tools.makeMatrixSymmetrical(this.originDestinationMatrix);
+		}
+		else{
+			console.log("matrix is symmetrical, at (i,j) we have the same value than at (j,i)");
+		}
+
 		// we check if the json is a transitive matrix
-		if(!isTransitive(this.originDestinationMatrix)){
-			console.log("the matrix is not transitive, we apply transitive closure");
-			// this.originDestinationMatrix = applyTransitiveClosure(this.originDestinationMatrix);
-			console.log("is matrix transitive from json file now ? "+isTransitive(this.originDestinationMatrix));
+		if(!tools.isMatrixTransitive_no_zero_outside_diagonal(this.originDestinationMatrix)){
+			console.log("the matrix is not transitive, there are 0 outside diagonal");
+		}
+		else{
+			console.log("matrix is transitive, no 0 outside diagonal");
 		}
 		// console.log("originDestinationData:", originDestinationData);
 		// console.log("Matrix dimensions:", originDestinationData.length, "x", originDestinationData[0].length);		
@@ -161,7 +186,7 @@ export class OriginDestination {
 					const travelTimePerCoordinate = travelTime / currentLatLng.length;
 
 					// Generate a random number between 0 and 2 in order to have a sort of tracking by advancing or not on the road
-					const randomNumber = randomIntFromInterval(0, 2);
+					const randomNumber = tools.randomIntFromInterval(0, 2);
 
 					// If the random number is 0, it means that the friend doesn't move so he's losing time
 					if (randomNumber == 0) {
@@ -196,14 +221,14 @@ export class OriginDestination {
 						// The friend has reached the destination
 						friend.hasArrived = true; // Mark the friend as arrived
 						arrivedFriends.add(friend); // Add the friend to the Set of arrived friends
-						log(`${friend.name} has arrived at the meeting point!`);
+						tools.log(`${friend.name} has arrived at the meeting point!`);
 					}
 				}
 			}
 
 			// If all friends arrived
 			if (arrivedFriends.size === this.friends.length) {
-				log("All friends have arrived!");
+				tools.log("All friends have arrived!");
 				clearInterval(this.trackingInterval); // Stop the interval when all friends have arrived
 				// Enable the button to change friends location once the tracking is finished
 				document.querySelector("#buttonChangeFriendsLocation").disabled = false;
@@ -248,7 +273,7 @@ export class OriginDestination {
 				.bindPopup(
 					`${this.friends[x].name} is currently at ${this.friends[x].currentLocation.name}.`
 				);
-			log(
+			tools.log(
 				`${this.friends[x].name} is currently at ${this.friends[x].currentLocation.name}.`
 			);
 		}
@@ -284,17 +309,17 @@ export class OriginDestination {
 
 		// If we haven't specified travel time
 		if (trackTravelTime == null) {
-			log(`${friend.name} is currently at ${location.name}.`);
+			tools.log(`${friend.name} is currently at ${location.name}.`);
 		} else {
 			// Show an alert in the logs if he is 10 or more early
 			if (trackTravelTime > 10) {
-				log(
+				tools.log(
 					`${friend.name} will be ${Math.round(trackTravelTime)} seconds early.`
 				);
 			}
 			// Show an alert in the logs if he is -10 or less late
 			if (trackTravelTime < -10) {
-				log(
+				tools.log(
 					`${friend.name} will be ${Math.abs(
 						Math.round(trackTravelTime)
 					)} seconds late.`
@@ -411,7 +436,7 @@ export class OriginDestination {
 				`The earliest meeting point is ${this.meetingLocation.name} and will take place in ${earliestMeetingTime} minutes.`
 			)
 			.openPopup(); // Open the popup when the marker is added;
-		log(
+		tools.log(
 			`The earliest meeting point is ${this.meetingLocation.name} and will take place in ${earliestMeetingTime} minutes.`
 		);
 
