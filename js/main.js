@@ -3,6 +3,17 @@ import { Friend } from "./classes/Friend.js";
 import { OriginDestination } from "./classes/OriginDestination.js";
 import locationsData from "../data/locationsData.json" assert { type: "json" };
 import friendsList from "../data/friendsData.json" assert { type: "json" };
+import * as tools from "./utils/tools.js";
+
+// we check if the json files for friends and locations are correct according to our syntax
+if(!tools.checkFriendJson(friendsList)){
+	console.log("Json file for friends is not following the syntax correctly !");
+	window.alert("Json file for friends is not following the syntax correctly !");
+}
+if(!tools.checkLocationsJson(locationsData)){
+	console.log("Json file for locations is not following the syntax correctly !");
+	window.alert("Json file for locations is not following the syntax correctly !");
+}
 
 const locations = locationsData.map(
 	(data) => new Location(data.name, data.latitude, data.longitude)

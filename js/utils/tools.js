@@ -217,7 +217,7 @@ export function applyTransitiveClosure(matrix) {
 						console.log("value has to be modified because "+matrix[i][k]+" != "+matrix[i][j]+"+"+matrix[j][k]);
 						matrix[i][k] = matrix[i][j] + matrix[j][k];
 						console.log("so we replace (i,k) value with "+matrix[i][k]+" = "+matrix[i][j]+"+"+matrix[j][k]);
-                        // once a modification was brought, we can restart the process with the updated matrix
+                        // once a modification is brought, we can restart the process with the updated matrix
                         // until there are no modification left to bring
                         modified = true;
 						break;
@@ -236,3 +236,115 @@ export function applyTransitiveClosure(matrix) {
     return matrix;
 }
 
+/*
+	check friend json format
+*/
+export function checkFriendJson(jsonFile){
+
+	// the friend json is an array of several friends
+    if (!Array.isArray(jsonFile)) {
+		console.log("it's not an array");
+		return false;
+    }
+	// if the array size is inferior or equal to 1, then false (because friends are never alone)
+	if(jsonFile.length<=1){
+		console("only one friend or 0 guys")
+		return false;
+	}
+
+	// we will check the fields
+
+    const expectedFormat = {
+        name: "string",
+        currentLocation: {
+            name: "string",
+            latitude: "number",
+            longitude: "number"
+        },
+        iconUrl: "string",
+        currentPositionIndex: "number",
+        hasArrived: "boolean",
+        marker: ["object", null],
+        routingControl: ["object", null],
+        trackTravelTime: "number"
+    };
+
+	// for each friend
+	for (const friend of jsonFile) {
+		// check if each friend object matches the expected format
+		// if the type of data matches the expected type (for all fields)
+		// console.log(Object.keys(friend));
+		console.log(friend);
+		let problematicKey = null;
+		if (Object.keys(expectedFormat).every(key => {
+
+			if (!(key in friend)) {
+				problematicKey = key;
+			}
+		})){
+
+			// we continue to the next friend
+			continue;
+		}
+		else{
+			if(problematicKey!=null){
+				console.log("problem at "+problematicKey);
+				// the friend does not match the format
+				return false;
+			}
+		}
+	}
+	// all friends in the array match the format
+	return true;
+
+}
+
+/*
+	check locations json format
+*/
+export function checkLocationsJson(jsonFile) {
+    // expected format for a location object
+    const locationFormat = {
+        name: "string",
+        latitude: "number",
+        longitude: "number"
+    };
+
+    // check if the json is an array
+    if (Array.isArray(jsonFile)) {
+        for (const location of jsonFile) {
+            // check if each location object matches the expected format
+			// 3 data for each location
+            if (Object.keys(location).length != 3){
+				console.log("a field is missing")
+				return false;
+			}
+
+			console.log(location)
+
+			let problematicKey = null;
+			if (Object.keys(locationFormat).every(key => {
+
+				if (!(key in location)) {
+					problematicKey = key;
+				}
+			})){
+
+				// we continue to the next location
+				continue;
+			}
+			else{
+				if(problematicKey!=null){
+					console.log("problem at "+problematicKey);
+					// the location does not match the format
+					return false;
+				}
+			}
+		}
+		// all locations in the array match the format
+		return true;
+	}
+
+	// if it's not an array, then false (there must be several locations)
+	return false;
+}

@@ -63,13 +63,13 @@ function isMatrixTransitive_no_zero_outside_diagonal(matrix){
 function isTransitive(matrix) {
     const n = matrix.length;
 
-    // Loop through all combinations of points i, j, and k
+    // loop through all combinations of points i, j, and k
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < n; j++) {
 			if(i!=j){
 				for (let k = 0; k < n; k++) {
 					if(j!=k){
-						// Check if distance from i to k is different than (distance_from_i_to_j + distance_from_j_to_k)
+						// check if distance from i to k is different than (distance_from_i_to_j + distance_from_j_to_k)
 						if (i!=k && matrix[i][k] != matrix[i][j] + matrix[j][k]) {
 							console.log("problem ("+i+","+k+")"+" = "+matrix[i][k]+" AND ("+i+","+j+")"+" = "+matrix[i][j]+" with ("+j+","+k+")"+" = "+matrix[j][k]);
 							// transitivity condition violated
@@ -104,7 +104,7 @@ function makeMatrixTransitive(matrix) {
                 for (let k = 0; k < n; k++) {
                     if (j != k) {
                         if (i != k && matrix[i][k] != matrix[i][j] + matrix[j][k]) {
-                            // Adjust the value to make it transitive
+                            // we adjust the values to make matrix transitive
                             console.log("Change done at (" + i + "," + k + ")" + " = " + matrix[i][k] + " because (" + i + "," + j + ")" + " = " + matrix[i][j] + " with (" + j + "," + k + ")" + " = " + matrix[j][k]);
                             console.log("so instead of " + matrix[i][k] + ", we got " + (matrix[i][j] + matrix[j][k]) + "\n");
                             matrix[i][k] = matrix[i][j] + matrix[j][k];
