@@ -4,4 +4,6 @@ This project is made in HTML-CSS-JS. It uses the [Leaflet API](https://leafletjs
 
 You will find all elements of analysis including the complete report in the [analysis](https://github.com/Nexusprime22/MSC_Project/tree/main/analysis) folder.
 
+You can also see a demo video of this project on [YouTube](https://youtu.be/M6srmPKkkQU).
+
 ## Made by WINTERSTEIN Antonin and MAXEL Killian
